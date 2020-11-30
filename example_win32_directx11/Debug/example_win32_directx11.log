@@ -1,0 +1,52 @@
+﻿  main.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(342,29): warning C4100: 'currentGameSelected': unreferenced formal parameter
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(380,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(381,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(395,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(396,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(444,56): warning C4042: 'buffferrrr': has bad storage class
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(445,5): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(488,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(531,50): warning C4459: declaration of 'curBufferForEventName' hides global declaration
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(251,6): message : see declaration of 'curBufferForEventName'
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(608,78): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(539,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(551,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(654,13): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(663,13): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(773,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(777,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(779,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(783,17): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(824,14): warning C4189: 'show_demo_window': local variable is initialized but not referenced
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5056,45): warning C4459: declaration of 'first' hides global declaration
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(77,6): message : see declaration of 'first'
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5057): message : while compiling class template member function 'nlohmann::detail::iterator_input_adapter<const char *> nlohmann::detail::iterator_input_adapter_factory<const char *,void>::create(IteratorType,IteratorType)'
+          with
+          [
+              IteratorType=const char *
+          ]
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5091): message : see reference to function template instantiation 'nlohmann::detail::iterator_input_adapter<const char *> nlohmann::detail::iterator_input_adapter_factory<const char *,void>::create(IteratorType,IteratorType)' being compiled
+          with
+          [
+              IteratorType=const char *
+          ]
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5121): message : see reference to class template instantiation 'nlohmann::detail::iterator_input_adapter_factory<const char *,void>' being compiled
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5088): message : see reference to function template instantiation 'iterator_input_adapter_factory<IteratorType,void>::adapter_type nlohmann::detail::input_adapter(IteratorType,IteratorType)' being compiled
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(4848,1): warning C4459: declaration of 'first' hides global declaration
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(77,6): message : see declaration of 'first'
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(4848): message : while compiling class template member function 'nlohmann::detail::iterator_input_adapter<const char *>::iterator_input_adapter(IteratorType,IteratorType)'
+          with
+          [
+              IteratorType=const char *
+          ]
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5058): message : see reference to function template instantiation 'nlohmann::detail::iterator_input_adapter<const char *>::iterator_input_adapter(IteratorType,IteratorType)' being compiled
+          with
+          [
+              IteratorType=const char *
+          ]
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\packages\nlohmann.json.3.9.1\build\native\include\nlohmann\json.hpp(5172): message : see reference to class template instantiation 'nlohmann::detail::iterator_input_adapter<const char *>' being compiled
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(164): warning C4715: 'getEventByID': not all control paths return a value
+\\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\main.cpp(157): warning C4715: 'getGameByID': not all control paths return a value
+  example_win32_directx11.vcxproj -> \\CCNSAN01\Data\C1BILHAM\My Documents\ESports Project\Source\imgui-master\examples\example_win32_directx11\Debug\example_win32_directx11.exe
