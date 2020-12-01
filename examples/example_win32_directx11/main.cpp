@@ -420,24 +420,70 @@ void globalTeamWindow(int& currentlySelectedTeam) {
     }
 }
 
-const float eventSpacing_starting = 170.f;
-float eventSpacing = 170.f;
+const float eventSpacing_starting = 120.f;
+float eventSpacing = 230.f;
 
 void eventBar(int& currentEventSelected, int& eventCount, std::vector<Event>& eventList, int& currentGameSelected) {
     for (int i = 0; i < eventCount; i++) {
         std::string name = eventList.at(i).eventName;
 
-        if (i > 1)
-            ImGui::SetColumnWidth(i, eventSpacing);
+        float textWidth = ImGui::CalcTextSize((name).c_str()).x + 18.f;
+        if (i >= 0)
+        {
+
+        }
         else
-            ImGui::SetColumnWidth(i, eventSpacing_starting);
+            ImGui::SetColumnWidth(0, eventSpacing_starting);
 
         ImGui::NextColumn();
         if (ImGui::Button((name + "###" + std::to_string(eventList.at(i).eventID)).c_str())) {
             currentEventSelected = i;
             currentGameSelected = 0;
         }
-        if(currentEventSelected == i) ImGui::Text("^^^^^^^^^^^^^^^^^^^^");
+        if (currentEventSelected == i) {
+            {
+                static char curBufferForEventName[128] = "Buff";
+                if (setupMode) {
+                 //   ImGui::Text("Event Name: ");
+                    ImGui::SameLine();
+                    //     ImGui::Button((eventName).c_str());
+
+                    textWidth += ImGui::CalcTextSize("Edit---").x;
+
+                    ImGui::Button(("Edit"));
+                    if (ImGui::BeginPopupContextItem())
+                    {
+                        // Load data from saved memory
+                        strcpy(curBufferForEventName, eventList.at(currentEventSelected).eventName.c_str());
+
+                        ImGui::SetNextItemWidth(200.f);
+                        ImGui::InputText("input text", curBufferForEventName, IM_ARRAYSIZE(curBufferForEventName));
+
+                        // Save Data to memory
+                        mainStorage.Events.at(currentEventSelected).eventName = curBufferForEventName;
+
+                        std::string* evntName_543 = &mainStorage.Events.at(currentEventSelected).eventName;
+                        *evntName_543 = curBufferForEventName;
+
+                        // Load data from saved memory
+                        strcpy(curBufferForEventName, eventList.at(currentEventSelected).eventName.c_str());
+
+                        ImGui::NewLine();
+
+                        if (ImGui::Button("Close")) {
+                            ImGui::CloseCurrentPopup();
+                        }
+                        ImGui::EndPopup();
+                    }
+                }
+            }
+            ImGui::Text("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        }
+        if (i >= 0)
+        {
+            ImGui::SetColumnWidth(i + 1, textWidth);
+
+        }
     }
 }
 
@@ -461,6 +507,8 @@ void Frame() {
 
     ImGui::SetWindowSize(ImVec2{ 100.f, 100.f });
     ImGui::Begin("Insert text here.", 0, ImGuiWindowFlags_NoTitleBar || ImGuiWindowFlags_NoResize);
+
+    ImGui::BeginChild("dfspnp###4633", ImVec2{ 0, 120 }, true);
 
     modeButtons();
 
@@ -492,7 +540,6 @@ void Frame() {
 
     ImGui::Columns(eventCount + 1);
 
-
     if (eventCount > 0) ImGui::SetColumnWidth(0, 100.f);
 
     ImGui::Text("Events");
@@ -500,6 +547,7 @@ void Frame() {
         ImGui::SameLine();
         addNewEventButton(currentGameSelected);
     }
+
 
     eventBar(currentEventSelected, eventCount, eventList, currentGameSelected);
 
@@ -510,6 +558,8 @@ void Frame() {
         ImGui::Text("No events exist!");
 
         first = false;
+        ImGui::EndChild();
+
         ImGui::End();
         return;
     }
@@ -518,89 +568,61 @@ void Frame() {
 
     std::string eventName = eventList.at(currentEventSelected).eventName;
 
+    ImGui::EndChild();
+
+    ImGui::BeginChild("yubinopfndoim", ImVec2{ 0, 720 }, false );
+    ImGui::Text("iodgnok");
+    ImGui::NewLine();
 
     ImGui::NewLine();
 
-    if (!setupMode) 
-        ImGui::Text(("Event Name: " + eventName).c_str());
+    bool broke{ false };
+    while (true) {
 
-    //
-    // Event right click edit menu
-    //
-    {
-        static char curBufferForEventName[128] = "Buff";
-        if (setupMode) {
-            ImGui::Text("Event Name: ");
-            ImGui::SameLine();
-            ImGui::Button((eventName).c_str());
-            if (ImGui::BeginPopupContextItem())
-            {
-                // Load data from saved memory
-                strcpy(curBufferForEventName, eventList.at(currentEventSelected).eventName.c_str());
-
-                ImGui::SetNextItemWidth(200.f);
-                ImGui::InputText("input text", curBufferForEventName, IM_ARRAYSIZE(curBufferForEventName));
-
-                // Save Data to memory
-                mainStorage.Events.at(currentEventSelected).eventName = curBufferForEventName;
-
-                std::string* evntName_543 = &mainStorage.Events.at(currentEventSelected).eventName;
-                *evntName_543 = curBufferForEventName;
-
-                // Load data from saved memory
-                strcpy(curBufferForEventName, eventList.at(currentEventSelected).eventName.c_str());
-
-                ImGui::NewLine();
-
-                if (ImGui::Button("Close")) {
-                    ImGui::CloseCurrentPopup();
-                }
-                ImGui::EndPopup();
+        if (currentEvent_Cache.Games.size() > 0) {
+            if (currentEventSelected == -1) {
+                ImGui::Columns(1);
+                ImGui::Text("No event selected!");
+                first = false;
+                broke = true;
+                break;
             }
-            ImGui::SameLine();
-            ImGui::Text("<--- Right Click to edit.");
 
-        }
-    }
-
-    ImGui::NewLine();
-
-    if (currentEvent_Cache.Games.size() > 0) {
-        if (currentEventSelected == -1) {
+            ImGui::Spacing();
             ImGui::Columns(1);
-            ImGui::Text("No event selected!");
-            first = false;
-            ImGui::End();
-            return;
-        }
+            if (currentEvent_Cache.doesGameExistByID(currentEvent_Cache.CurrentPlayingGame_ID)) {
+                Game         currentGame = getGameByID(currentEvent_Cache.Games, currentEvent_Cache.CurrentPlayingGame_ID);
+                std::string currentGameName = "N/A";
+                if (currentEvent_Cache.CurrentPlayingGame_ID > 0) currentGameName = currentGame.gameName;
+                ImGui::Text(("Current Game: " + currentGameName).c_str());
+            }
+            else {
+                ImGui::Text("Current game not setup!");
+            }
 
-        ImGui::Spacing();
-        ImGui::Columns(1);
-        if (currentEvent_Cache.doesGameExistByID(currentEvent_Cache.CurrentPlayingGame_ID)) {
-            Game         currentGame = getGameByID(currentEvent_Cache.Games, currentEvent_Cache.CurrentPlayingGame_ID);
-            std::string currentGameName = "N/A";
-            if (currentEvent_Cache.CurrentPlayingGame_ID > 0) currentGameName = currentGame.gameName;
-            ImGui::Text(("Current Game: " + currentGameName).c_str());
+            if (currentEvent_Cache.doesGameExistByID(currentEvent_Cache.NextGameToPlay_ID)) {
+                Game nextGame = getGameByID(currentEvent_Cache.Games, currentEvent_Cache.NextGameToPlay_ID);
+                std::string nextGameName = "N/A";
+                if (currentEvent_Cache.NextGameToPlay_ID > 0) nextGameName = nextGame.gameName;
+                ImGui::Text(("Next    Game: " + nextGameName).c_str());
+            }
+            else {
+                ImGui::Text("Next game not setup!");
+            }
         }
         else {
-            ImGui::Text("Current game not setup!");
+            //
+            //      NO GAMES EXIST
+            //
+            ImGui::Text("No games exist!");
         }
-
-        if (currentEvent_Cache.doesGameExistByID(currentEvent_Cache.NextGameToPlay_ID)) {
-            Game nextGame = getGameByID(currentEvent_Cache.Games, currentEvent_Cache.NextGameToPlay_ID);
-            std::string nextGameName = "N/A";
-            if (currentEvent_Cache.NextGameToPlay_ID > 0) nextGameName = nextGame.gameName;
-            ImGui::Text(("Next    Game: " + nextGameName).c_str());
-        }
-        else {
-            ImGui::Text("Next game not setup!");
-        }
+        break;
     }
-    else {
-        //
-        //      NO GAMES EXIST
-        //
-        ImGui::Text("No games exist!");
+
+    if (broke) {
+        ImGui::EndChild();
+        ImGui::End();
+        return;
     }
 
     ImGui::Columns(1);
@@ -634,7 +656,8 @@ void Frame() {
         if (ImGui::Button((name + "###" + std::to_string(mainStorage.Events.at(currentEventSelected).Games.at(i).gameID)).c_str())) {
             currentGameSelected = i;
         }
-        if (currentGameSelected == i) ImGui::Text("^^^^^^^^^^^^^^^^^^^^");
+        if (currentGameSelected == i)
+            ImGui::Text("^^^^^^^^^^^^^^^^^^^^");
     }
 
     ImGui::Columns(1); ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -686,6 +709,7 @@ void Frame() {
 
     if (currentEvent_Cache.Games.size() <= 0) {
         first = false;
+        ImGui::EndChild();
         ImGui::End();
         return;
     }
@@ -693,26 +717,25 @@ void Frame() {
     Game currentGame_CACHE = mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected);
 
     ImGui::NewLine();
-    ImGui::Separator();
     ImGui::Text(currentGame_CACHE.gameName.c_str());
 
-    ImGui::BeginChild("Container###3242");
+    ImGui::BeginChild("Container###3242", ImVec2{ 0, 0 }, true);
     {
-        ImGui::Columns(2);
+        ImGui::Columns(1);
 
-        ImGui::SetColumnWidth(0, 300.f);
-        ImGui::SetColumnWidth(1, 300.f);
+        //    ImGui::SetColumnWidth(0, 300.f);
+       //     ImGui::SetColumnWidth(1, 300.f);
 
-    #pragma region Part Teams
+#pragma region Part Teams
 
+        ImGui::BeginChild("ETeams", ImVec2{ 200, 100 }, true);
         {
-            ImGui::BeginChild("ETeams");
-            ImGui::Columns(2);
-            ImGui::SetColumnWidth(0, 120.f);
-            ImGui::SetColumnWidth(1, 300.f);
+            //      ImGui::Columns(2);
+              //    ImGui::SetColumnWidth(0, 120.f);
+             //     ImGui::SetColumnWidth(1, 300.f);
             ImGui::Text("Entered Teams");
 
-            ImGui::NextColumn();
+            // ImGui::NextColumn();
             ImGui::NewLine();
 
             //
@@ -722,75 +745,77 @@ void Frame() {
                 ImGui::Text(mainStorage.GlobalTeams.at(i).teamName.c_str());
             }
 
-            ImGui::EndChild();
         }
+        ImGui::EndChild();
 
-    #pragma endregion
+#pragma endregion
 
 
         ImGui::NextColumn();
 
-        ImGui::BeginChild("Ranks");
-        ImGui::Columns(2);
-        ImGui::SetColumnWidth(0, 120.f);
-        ImGui::SetColumnWidth(1, 300.f);
-        ImGui::Text("Rankings");
+        ImGui::BeginChild("Ranks", ImVec2{ 200, 100 }, true);
+        {
+          //  ImGui::Columns(2);
+         //   ImGui::SetColumnWidth(0, 120.f);
+          //  ImGui::SetColumnWidth(1, 300.f);
+            ImGui::Text("Rankings");
 
-        ImGui::NextColumn();
-        ImGui::NewLine();
+          //  ImGui::NextColumn();
+            ImGui::NewLine();
 
-        //
-        // Load Gloabl Teams
-        //
-        for (int i = 0; i < mainStorage.GlobalTeams.size(); i++) {
-            std::string qqq = mainStorage.GlobalTeams.at(i).teamName.c_str();
-            qqq = "Global - " + qqq;
-            ImGui::Text(qqq.c_str());
-        }
-
-        for (int i = 0; i < mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.size(); i++) {
-            std::string qqq = mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName.c_str();
-            qqq = "Temp   - " + qqq;
-            ImGui::Text(qqq.c_str());
-
-            if (!setupMode) continue;
-
-            static int selectedTemThing = 0;
-            if (ImGui::Button(("Edit###" + std::to_string(mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamID)).c_str())) {
-                selectedTemThing = i;
+            //
+            // Load Gloabl Teams
+            //
+            for (int i = 0; i < mainStorage.GlobalTeams.size(); i++) {
+                std::string qqq = mainStorage.GlobalTeams.at(i).teamName.c_str();
+                qqq = "Global - " + qqq;
+                ImGui::Text(qqq.c_str());
             }
-            if (selectedTemThing == i) {
 
-                static char curBufferForTeamName[128] = "Buff";
-                static char curBufferForTeamBio[128] = "Buff";
-                static char curBufferForTeamUrl[128] = "Buff";
-                static int curEditTeam = 0;
-                if (curEditTeam > mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.size()) curEditTeam = 0;
+            for (int i = 0; i < mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.size(); i++) {
+                std::string qqq = mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName.c_str();
+                qqq = "Temp   - " + qqq;
+                ImGui::Text(qqq.c_str());
 
-                // Load data from saved memory
-                ImGui::SetNextItemWidth(200.f);
+                if (!setupMode) continue;
 
-                strcpy(curBufferForTeamName, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName.c_str());
-                ImGui::Text("Team Name"); ImGui::SameLine();
-                ImGui::InputText("###1", curBufferForTeamName, IM_ARRAYSIZE(curBufferForTeamName));
-                mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName = curBufferForTeamName;
-                strcpy(curBufferForTeamName, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName.c_str());
+                static int selectedTemThing = 0;
+                if (ImGui::Button(("Edit###" + std::to_string(mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamID)).c_str())) {
+                    selectedTemThing = i;
+                }
+                if (selectedTemThing == i) {
 
- /* Loading */  strcpy(curBufferForTeamBio, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).bio.c_str());
-                ImGui::Text("Team Bio"); ImGui::SameLine();
-/* Get input */ ImGui::InputText("###2", curBufferForTeamBio, IM_ARRAYSIZE(curBufferForTeamBio));
- /* SAVING */   mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).bio = curBufferForTeamBio;
- /* Loading */  strcpy(curBufferForTeamBio, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).bio.c_str());
+                    static char curBufferForTeamName[128] = "Buff";
+                    static char curBufferForTeamBio[128] = "Buff";
+                    static char curBufferForTeamUrl[128] = "Buff";
+                    static int curEditTeam = 0;
+                    if (curEditTeam > mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.size()) curEditTeam = 0;
 
+                    // Load data from saved memory
+                    ImGui::SetNextItemWidth(200.f);
+
+                    strcpy(curBufferForTeamName, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName.c_str());
+                    ImGui::Text("Team Name"); ImGui::SameLine();
+                    ImGui::InputText("###1", curBufferForTeamName, IM_ARRAYSIZE(curBufferForTeamName));
+                    mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName = curBufferForTeamName;
+                    strcpy(curBufferForTeamName, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).teamName.c_str());
+
+                    /* Loading */  strcpy(curBufferForTeamBio, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).bio.c_str());
+                    ImGui::Text("Team Bio"); ImGui::SameLine();
+                    /* Get input */ ImGui::InputText("###2", curBufferForTeamBio, IM_ARRAYSIZE(curBufferForTeamBio));
+                    /* SAVING */   mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).bio = curBufferForTeamBio;
+                    /* Loading */  strcpy(curBufferForTeamBio, mainStorage.Events.at(currentEventSelected).Games.at(currentGameSelected).paticipatingTeams.at(i).bio.c_str());
+
+                }
             }
+
+            if(setupMode) createNewTmpTeamButton(currentEventSelected, currentGameSelected);
         }
-
-        createNewTmpTeamButton(currentEventSelected, currentGameSelected);
-
         ImGui::EndChild();
     }
     ImGui::EndChild();
 
+    ImGui::EndChild();
     ImGui::End();
 }
 
