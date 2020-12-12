@@ -326,7 +326,7 @@ void createNewTeamButton(int& currentlySelectedTeam) {
 }
 
 void createNewTmpTeamButton(int curEvent, int curGame) {
-    if (ImGui::Button("Create New team###2221")) {
+    if (ImGui::Button("New temp team###2221")) {
         Team tmp = initTeamObj(mainStorage.GlobalTeams, "N/A");
 
         tmp.globalTeam = false;
@@ -512,7 +512,7 @@ void sortRanksByPoints(std::vector<Team>* teamsThing) {
     std::sort(mainStorage.GlobalTeams.begin(), mainStorage.GlobalTeams.end(), less_than_key());
 
     for (int i = 1; i <= mainStorage.GlobalTeams.size(); i++) {
-        mainStorage.GlobalTeams.at(i - 1).rank = i;
+        mainStorage.GlobalTeams.at(i - 1).rank = mainStorage.GlobalTeams.size() - i + 1;
     }
 }
 
@@ -530,7 +530,7 @@ void sortByRank(std::vector<Team>* teamsThing) {
 }
 
 void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool ordered = false, bool includeNonGlobal = true) {
-    ImGui::Text("Current Game Score");
+    ImGui::Text("Event Score");
 
     ImGui::NewLine();
 
@@ -541,7 +541,7 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
     int lastThing{ -1 };
     int lowestPlacement{ 1575678 };
 
-    if (ImGui::Button("Update Stats")) {
+    if (ImGui::Button("Update Rankings")) {
         // Assign ranks by points
         sortRanksByPoints(&mainStorage.GlobalTeams);
 
@@ -567,14 +567,15 @@ void iterate_PointsThing_THing_SOMETHING(std::vector<Team>* teamList) {
 
         Team  teamwer = teamList->at(i);
 
-        std::string dsmpf = (teamwer.teamName + " - " + teamList->at(i).teamName);
+        std::string dsmpf = (teamList->at(i).teamName);
         ImGui::Text(dsmpf.c_str());
         int uniqID_int = teamList->at(i).teamID;
         std::string uniqID = std::to_string(uniqID_int);
         uniqID += uniqID;
         {
             ImGui::SameLine();
-            ImGui::InputInt(("Points###" + uniqID).c_str(), &teamList->at(i).points, 0);
+            ImGui::SetNextItemWidth(100.f);
+            ImGui::InputInt(("###" + uniqID).c_str(), &teamList->at(i).points, 0);
         }
     }
 
@@ -582,20 +583,11 @@ void iterate_PointsThing_THing_SOMETHING(std::vector<Team>* teamList) {
 
 
 void displayTeam2(int currentEventSelected = 0, int currentGameSelected = 0, bool ordered = false, bool includeNonGlobal = true) {
-    ImGui::Text("Current Game Score"); ImGui::NewLine();
+    ImGui::Text("Game Score"); ImGui::NewLine();
 
     int cnt{ 0 };
     int lastThing{ -1 };
     int lowestPlacement{ 1575678 };
-
-    /*struct less_than_key
-    {
-        inline bool operator() (const Team& struct1, const Team& struct2)
-        {
-            return (struct1.points < struct2.points);
-        }
-    };
-    std::sort(mainStorage.GlobalTeams.begin(), mainStorage.GlobalTeams.end(), less_than_key());*/
 
     Team* bestTeam = nullptr;
 
