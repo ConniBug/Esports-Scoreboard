@@ -26,6 +26,20 @@ int qwqwawsqwaqswaqaqaqawaqswaq = 0;
 
 #include <chrono>
 
+float color_speed = -10.0;
+
+float color_red = 1.0;
+float color_green = 1.0;
+float color_blue = 0;
+float color_random = 0.0;
+
+static int currentEventSelected = 0;
+static int currentGameSelected = 0;
+static int currentGameIDSelected = -1;
+static int currentlySelectedTeam = -1;
+
+int eventCount = 0;
+
 // Data
 static ID3D11Device* g_pd3dDevice = NULL;
 static ID3D11DeviceContext* g_pd3dDeviceContext = NULL;
@@ -82,7 +96,15 @@ struct Member {
     std::string memberName;
 };
 
+struct pointsRecord {
+    int points{ 0 };
+    int gameID{ 0 };
+};
+
 struct Team {
+    int rank;
+    int totalPoints{ 0 };
+
     bool globalTeam;
 
     // Global team props
@@ -95,9 +117,26 @@ struct Team {
     std::string teamIcon;
 
     std::vector<Member> members;
+    std::vector<pointsRecord> pointRecords;
 
-    int rank{ 1 };
-    int points{ 0 };
+    bool doesRecordExist(int gameID) {
+        for (int i = 0; i <= pointRecords.size(); i++) {
+            if (pointRecords.at(i).points == gameID)
+                return true;
+        }
+        return false;
+    }
+
+    pointsRecord* getRecordByID(int gameID) {
+        if (pointRecords.size() <= 0) return nullptr;
+        for (int i = 0; i < pointRecords.size(); i++) {
+            if (pointRecords.at(i).gameID == gameID) {
+                return &pointRecords.at(i);
+            }
+        }
+        return nullptr;
+    }
+
 };
 
 struct Game {
@@ -229,6 +268,11 @@ Game initGameObj(std::vector<Game> Games, Game tempGame, std::string gameName = 
     tempGame.gameID = gameID;
     tempGame.gameName = gameName;
 
+    for (int i = 0; i < mainStorage.GlobalTeams.size(); i++) {
+        pointsRecord ppp;
+        ppp.gameID = tempGame.gameID;
+        mainStorage.GlobalTeams.at(i).pointRecords.push_back(ppp);
+    }
     return tempGame;
 }
 
@@ -248,6 +292,13 @@ Team initTeamObj(std::vector<Team> Teams, std::string teamName = NULL) {
 
     tempTeam.teamID = teamID;
     tempTeam.teamName = teamName;
+
+    if (mainStorage.Events.size() <= 0) return tempTeam;
+    for (int i = 0; i < mainStorage.Events.at(currentEventSelected).Games.size(); i++) {
+        pointsRecord ppp;
+        ppp.gameID = mainStorage.Events.at(currentEventSelected).Games.at(i).gameID;
+        tempTeam.pointRecords.push_back(ppp);
+    }
 
     return tempTeam;
 }
@@ -447,6 +498,8 @@ void eventBar(int& currentEventSelected, int& eventCount, std::vector<Event>& ev
         if (ImGui::Button((name + "###" + std::to_string(eventList.at(i).eventID)).c_str())) {
             currentEventSelected = i;
             currentGameSelected = 0;
+            currentGameIDSelected = -1;
+
         }
         if (currentEventSelected == i) {
             {
@@ -506,13 +559,13 @@ void sortRanksByPoints(std::vector<Team>* teamsThing) {
     {
         inline bool operator() (const Team& struct1, const Team& struct2)
         {
-            return (struct1.points < struct2.points);
+            return (struct1.totalPoints < struct2.totalPoints);
         }
     };
     std::sort(mainStorage.GlobalTeams.begin(), mainStorage.GlobalTeams.end(), less_than_key());
 
     for (int i = 1; i <= mainStorage.GlobalTeams.size(); i++) {
-        mainStorage.GlobalTeams.at(i - 1).rank = mainStorage.GlobalTeams.size() - i + 1;
+        mainStorage.GlobalTeams.at(i - 1).rank = mainStorage.GlobalTeams.size() - i;
     }
 }
 
@@ -554,7 +607,9 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
     for (int i = mainStorage.GlobalTeams.size() -1; i >= 0; i--) {
         std::string curRank = std::to_string(mainStorage.GlobalTeams.at(i).rank);
         std::string teamName = mainStorage.GlobalTeams.at(i).teamName;
-        std::string teamPoints = std::to_string(mainStorage.GlobalTeams.at(i).points);
+        if(currentGameIDSelected == -1) continue;
+        pointsRecord* dsg = mainStorage.GlobalTeams.at(i).getRecordByID(currentGameIDSelected);
+        std::string teamPoints = std::to_string(dsg->points);
 
         std::string builtSTR = curRank + " - " + teamName + " - " + teamPoints;
         ImGui::Text((builtSTR).c_str());
@@ -573,9 +628,12 @@ void iterate_PointsThing_THing_SOMETHING(std::vector<Team>* teamList) {
         std::string uniqID = std::to_string(uniqID_int);
         uniqID += uniqID;
         {
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(100.f);
-            ImGui::InputInt(("###" + uniqID).c_str(), &teamList->at(i).points, 0);
+            if (currentGameIDSelected != -1) {
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(100.f);
+                pointsRecord* edc = teamList->at(i).getRecordByID(currentGameIDSelected);
+                ImGui::InputInt(("###" + uniqID).c_str(), &edc->points, 0);
+            }
         }
     }
 
@@ -601,19 +659,6 @@ void displayTeam2(int currentEventSelected = 0, int currentGameSelected = 0, boo
     createNewTmpTeamButton(cES, cGS);
 
 }
-
-float color_speed = -10.0;
-
-float color_red = 1.0;
-float color_green = 1.0;
-float color_blue = 0;
-float color_random = 0.0;
-
-static int currentEventSelected = 0;
-static int currentGameSelected = 0;
-static int currentlySelectedTeam = -1;
-
-int eventCount = 0;
 
 void drawNewEventButton() {
     if (setupMode) {
@@ -760,6 +805,8 @@ void Frame() {
                 std::string name = mainStorage.Events.at(currentEventSelected).Games.at(i).gameName;
                 if (ImGui::Button((name + "###" + std::to_string(mainStorage.Events.at(currentEventSelected).Games.at(i).gameID)).c_str())) {
                     currentGameSelected = i;
+                    currentGameIDSelected = mainStorage.Events.at(currentEventSelected).Games.at(i).gameID;
+
                 }
                 if (currentGameSelected == i)
                     ImGui::Text("^^^^^^^^^^^^^^^^^^^^");
