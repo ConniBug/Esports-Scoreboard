@@ -680,6 +680,7 @@ bool doAnyEventsExist() {
     }
     return true;
 }
+
 void Frame() {
     {
         static float Color[3];
@@ -739,7 +740,6 @@ void Frame() {
         ImGui::BeginChild("yubinopfndoim", ImVec2{ 0, 130 }, true);
         {
             while (true) {
-
                 if (currentEvent_Cache.Games.size() > 0) {
                     if (currentEventSelected == -1) {
                         ImGui::Columns(1);
@@ -869,16 +869,10 @@ void Frame() {
         {
             ImGui::Columns(1);
 
-            //    ImGui::SetColumnWidth(0, 300.f);
-           //     ImGui::SetColumnWidth(1, 300.f);
-
 #pragma region Part Teams
 
             ImGui::BeginChild("ETeams", ImVec2{ 350, 300 }, true);
             {
-                //      ImGui::Columns(2);
-                  //    ImGui::SetColumnWidth(0, 120.f);
-                 //     ImGui::SetColumnWidth(1, 300.f);
                 ImGui::Text("Scorebored");
 
                 // ImGui::NextColumn();
@@ -893,12 +887,7 @@ void Frame() {
 
             ImGui::BeginChild("ETeams2", ImVec2{ 350, 300 }, true);
             {
-                //      ImGui::Columns(2);
-                  //    ImGui::SetColumnWidth(0, 120.f);
-                 //     ImGui::SetColumnWidth(1, 300.f);
                 ImGui::Text("Scorebored");
-
-                // ImGui::NextColumn();
                 ImGui::NewLine();
 
                 displayTeam2(currentEventSelected, currentGameSelected, true, false);
@@ -906,7 +895,6 @@ void Frame() {
             }
             ImGui::EndChild();
 #pragma endregion
-
         }
         ImGui::EndChild();
     }
@@ -918,39 +906,28 @@ int main(int, char**) {
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("Conni Proj"), NULL };
     ::RegisterClassEx(&wc);
     HWND hwnd = ::CreateWindow(wc.lpszClassName, _T("Scoreboard _ V: 0.0.1.9b"), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
-
     {
         if (!CreateDeviceD3D(hwnd)) {
             CleanupDeviceD3D();
             ::UnregisterClass(wc.lpszClassName, wc.hInstance);
             return 1;
         }
-
-        // Show the window
         ::ShowWindow(hwnd, SW_SHOWDEFAULT);
         ::UpdateWindow(hwnd);
-
-        // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
-
         ImGui::StyleColorsDark();
-
         ImGui_ImplWin32_Init(hwnd);
         ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
-
-        bool show_demo_window = true;
-
     }
     ImVec4 clear_color = ImVec4(color_red, color_green, color_blue, 1.00f);
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
     clear_color = ImVec4(0.f, 0.f, 0.f, 0.00f);
-    // Main loop
+
     while (msg.message != WM_QUIT) {
         //clear_color = ImVec4(color_red, color_green, color_blue, 1.00f);
-
         ImGuiStyle* style = &ImGui::GetStyle();
         ImVec4* colors = style->Colors;
 
@@ -963,13 +940,10 @@ int main(int, char**) {
             continue;
         }
 
-        // Start the Dear ImGui frame
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
-
         ImGui::ShowDemoWindow();
-
         {
             static bool oneTime = true;
             if (oneTime) {
