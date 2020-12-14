@@ -518,7 +518,7 @@ void eventBar(int& currentEventSelected, int& eventCount, std::vector<Event>& ev
                         strcpy(curBufferForEventName, eventList.at(currentEventSelected).eventName.c_str());
 
                         ImGui::SetNextItemWidth(200.f);
-                        ImGui::InputText("input text", curBufferForEventName, IM_ARRAYSIZE(curBufferForEventName));
+                        ImGui::InputText("Title", curBufferForEventName, IM_ARRAYSIZE(curBufferForEventName));
 
                         // Save Data to memory
                         mainStorage.Events.at(currentEventSelected).eventName = curBufferForEventName;
@@ -621,7 +621,7 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
     Team* bestTeam = nullptr;
 
     for (int i = mainStorage.GlobalTeams.size() -1; i >= 0; i--) {
-        std::string curRank = std::to_string(mainStorage.GlobalTeams.at(i).rank);
+        std::string curRank = std::to_string(mainStorage.GlobalTeams.at(i).rank + 1);
         std::string teamName = mainStorage.GlobalTeams.at(i).teamName;
         if(currentGameIDSelected == -1) continue;
         Team dsg = mainStorage.GlobalTeams.at(i);
@@ -629,6 +629,34 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
 
         std::string builtSTR = curRank + " - " + teamName + " - " + teamPoints;
         ImGui::Text((builtSTR).c_str());
+        static char curBufferForTeamName[128] = "Buff";
+        static char curBufferForBioPage[128] = "Buff";
+
+        ImGui::Button("info###57348");
+        if (ImGui::BeginPopupContextItem()) {
+            // Load data from saved memory
+            strcpy(curBufferForTeamName, mainStorage.GlobalTeams.at(i).teamName.c_str());
+            strcpy(curBufferForBioPage, mainStorage.GlobalTeams.at(i).bio.c_str());
+
+            ImGui::SetNextItemWidth(200.f);
+            ImGui::InputText("Game Name", curBufferForTeamName, IM_ARRAYSIZE(curBufferForTeamName));
+            ImGui::InputText("Game Name", curBufferForBioPage, IM_ARRAYSIZE(curBufferForBioPage));
+
+            // Save Data to memory
+            mainStorage.GlobalTeams.at(i).teamName  = curBufferForTeamName;
+            mainStorage.GlobalTeams.at(i).bio       = curBufferForBioPage;
+
+            // Load data from saved memory
+            strcpy(curBufferForTeamName, mainStorage.GlobalTeams.at(i).teamName.c_str());
+            strcpy(curBufferForBioPage, mainStorage.GlobalTeams.at(i).teamName.c_str());
+
+            ImGui::NewLine();
+
+            if (ImGui::Button("Close")) {
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
     }
 }
 
@@ -837,6 +865,7 @@ void Frame() {
                 if (ImGui::BeginPopupContextItem()) {
                     // Load data from saved memory
                     strcpy(curBufferForGameName, eventList.at(currentEventSelected).Games.at(currentGameSelected).gameName.c_str());
+                    static char curBio[528] = "Buff";
 
                     ImGui::SetNextItemWidth(200.f);
                     ImGui::InputText("Game Name", curBufferForGameName, IM_ARRAYSIZE(curBufferForGameName));
