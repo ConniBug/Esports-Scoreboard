@@ -582,6 +582,20 @@ void sortByRank(std::vector<Team>* teamsThing) {
 
 }
 
+int calcTotalPoints(Team* tempTeamObj) {
+    int tmp = 0;
+    for (int i = tempTeamObj->pointRecords.size(); i <= 0; i--) {
+        tmp += tempTeamObj->pointRecords.at(i).points;
+    }
+    return tmp;
+}
+
+void calculateAllTeamPoints() {
+    for (int i = mainStorage.GlobalTeams.size(); i <= 0; i--) {
+        mainStorage.GlobalTeams.at(i).totalPoints = calcTotalPoints(&mainStorage.GlobalTeams.at(i));
+    }
+}
+
 void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool ordered = false, bool includeNonGlobal = true) {
     ImGui::Text("Event Score");
 
@@ -595,6 +609,8 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
     int lowestPlacement{ 1575678 };
 
     if (ImGui::Button("Update Rankings")) {
+        calculateAllTeamPoints();
+
         // Assign ranks by points
         sortRanksByPoints(&mainStorage.GlobalTeams);
 
