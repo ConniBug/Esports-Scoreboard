@@ -630,17 +630,18 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
         std::string builtSTR = curRank + " - " + teamName + " - " + teamPoints;
         ImGui::Text((builtSTR).c_str());
         static char curBufferForTeamName[128] = "Buff";
-        static char curBufferForBioPage[128] = "Buff";
+        static char curBufferForBioPage[728] = "Buff";
 
-        ImGui::Button("info###57348");
+        ImGui::Button((std::string("info###") + curRank).c_str());
         if (ImGui::BeginPopupContextItem()) {
             // Load data from saved memory
             strcpy(curBufferForTeamName, mainStorage.GlobalTeams.at(i).teamName.c_str());
             strcpy(curBufferForBioPage, mainStorage.GlobalTeams.at(i).bio.c_str());
 
             ImGui::SetNextItemWidth(200.f);
-            ImGui::InputText("Game Name", curBufferForTeamName, IM_ARRAYSIZE(curBufferForTeamName));
-            ImGui::InputText("Game Name", curBufferForBioPage, IM_ARRAYSIZE(curBufferForBioPage));
+            ImGui::InputText("Team Name", curBufferForTeamName, IM_ARRAYSIZE(curBufferForTeamName));
+
+            ImGui::InputTextMultiline("Bio", curBufferForBioPage, IM_ARRAYSIZE(curBufferForBioPage), ImVec2{ 0,0 }, ImGuiInputTextFlags_AllowTabInput);
 
             // Save Data to memory
             mainStorage.GlobalTeams.at(i).teamName  = curBufferForTeamName;
