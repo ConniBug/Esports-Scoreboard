@@ -584,14 +584,14 @@ void sortByRank(std::vector<Team>* teamsThing) {
 
 int calcTotalPoints(Team* tempTeamObj) {
     int tmp = 0;
-    for (int i = tempTeamObj->pointRecords.size(); i <= 0; i--) {
+    for (int i = 0; i <= tempTeamObj->pointRecords.size(); i++) {
         tmp += tempTeamObj->pointRecords.at(i).points;
     }
     return tmp;
 }
 
 void calculateAllTeamPoints() {
-    for (int i = mainStorage.GlobalTeams.size(); i <= 0; i--) {
+    for (int i = 0; i <= mainStorage.GlobalTeams.size(); i++) {
         mainStorage.GlobalTeams.at(i).totalPoints = calcTotalPoints(&mainStorage.GlobalTeams.at(i));
     }
 }
@@ -624,8 +624,8 @@ void displayTeam(int currentEventSelected = 0, int currentGameSelected = 0, bool
         std::string curRank = std::to_string(mainStorage.GlobalTeams.at(i).rank);
         std::string teamName = mainStorage.GlobalTeams.at(i).teamName;
         if(currentGameIDSelected == -1) continue;
-        pointsRecord* dsg = mainStorage.GlobalTeams.at(i).getRecordByID(currentGameIDSelected);
-        std::string teamPoints = std::to_string(dsg->points);
+        Team dsg = mainStorage.GlobalTeams.at(i);
+        std::string teamPoints = std::to_string(dsg.totalPoints);
 
         std::string builtSTR = curRank + " - " + teamName + " - " + teamPoints;
         ImGui::Text((builtSTR).c_str());
