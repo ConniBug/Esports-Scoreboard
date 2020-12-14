@@ -584,14 +584,14 @@ void sortByRank(std::vector<Team>* teamsThing) {
 
 int calcTotalPoints(Team* tempTeamObj) {
     int tmp = 0;
-    for (int i = 0; i <= tempTeamObj->pointRecords.size(); i++) {
+    for (int i = 0; i < tempTeamObj->pointRecords.size(); i++) {
         tmp += tempTeamObj->pointRecords.at(i).points;
     }
     return tmp;
 }
 
 void calculateAllTeamPoints() {
-    for (int i = 0; i <= mainStorage.GlobalTeams.size(); i++) {
+    for (int i = 0; i < mainStorage.GlobalTeams.size(); i++) {
         mainStorage.GlobalTeams.at(i).totalPoints = calcTotalPoints(&mainStorage.GlobalTeams.at(i));
     }
 }
