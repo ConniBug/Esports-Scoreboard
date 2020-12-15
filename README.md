@@ -42,6 +42,7 @@ To change/add new team there are confusing menus for the admins to navigate and 
 This is my main gui  design
 
 ## Image 2
+![alt text](https://github.com/ConniTheKiwi/Esports-Scoreboard/blob/master/image.jpg?raw=true)
 
 With this design I believe I have cleared up a lot of the confusion with the design and general usage of the application, with this design everything is in one window, but there are 2 operating modes of this application, spectator mode and admin mode within spectator mode all the add new/change buttons/input fields are unusable and hidden from the operator but in admin mode all of them fields are usable and visible.
 
