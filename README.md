@@ -29,8 +29,7 @@ I would believe this is a great method pf scoring  because then it makes it a lo
 
 For my initial design for the layout, I have decided to create this
 
-## Image 1
-[Image 1](docs/image1.png)
+![Image 1](docs/image1.png)
 
 Within this design I have chosen to have multiple areas of the application first the actual leader board that displays all the current positions and standings of all the players and teams, this shows the points per team and gives for the ability to view the points each team member has gained for their team, also on this screen it will display the overall wins/losses for each of these teams, as well as the team stats it will show the stats for each individual game.
 
@@ -42,7 +41,6 @@ To change/add new team there are confusing menus for the admins to navigate and 
 
 This is my main gui  design
 
-## Image 2
 [Image 2](docs/image2.png)
 
 With this design I believe I have cleared up a lot of the confusion with the design and general usage of the application, with this design everything is in one window, but there are 2 operating modes of this application, spectator mode and admin mode within spectator mode all the add new/change buttons/input fields are unusable and hidden from the operator but in admin mode all of them fields are usable and visible.
