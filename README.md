@@ -1,5 +1,7 @@
 # Esports-Scoreboard
 
+### Introduction
+
 In this report I will be looking at the esports project brief and evaluating the requests and demands of the project, the brief demands that we have got a scoreboard that displays the scores of everyone involved within the game in a nice simple easy to read layout, and allow judges to enter the results of each game as the finish them, we are required to support at least 6 teams each with 5 members who will be able to compete in 5 different games, when these games are finished they get given a placement rank witch will then dictate the amount of points they get given, it was specifically stated that the points given for each rank are still undecided so we can decide that on our own, they also stated in the brief that there needs to be a way for a guest team entering for one game only. Later, we then spoke to the client with some questions.
 
 So we questioned the client on different graphic design questions such as the colour and art style they wanted and told us that they have no specific art styles they are going for, but in regards to the colour palate they said they would like them based of the colleges colour palate, so that’s something that I will need to include in the final design to cater to their requirements, 
@@ -8,7 +10,7 @@ I also asked them about the deployment of the final build and we were told it wo
 
 
 
-### First scoring system design
+# First scoring system design
 
 My first design for the scoring system is setup so that you would play a game between 2 or more teams then the placements of each of the teams will be entered into the system and then the system will allocate points to each team based on their placement were the higher placements will result in the team gaining more points ranking them higher than others using the scores of 
 1st being worth 4 points, 
@@ -18,14 +20,21 @@ and anything else being worth 1 point
 and if someone draws 1st 2nd or 3rd it will count them both as coming the rank below and the rank, they both came is skipped.
 I believe this is a good idea because it will mean that people who win higher ranks more often will rank higher overall and also the gap between each position is marginal it gives others more chance to be able to overtake each other, but this means that the games direction can change very quickly one minute someone can be in first then next game be in last, there’s a lot of pressure on the person holding 1st place to keep it, also in regards to skipping I believe stopping them both from getting that extra points as they drew will make situations a lot more stressful and frustrating for the players making the game more interesting, as it gives less incentive to want to draw.
 
+## Feedback
 
-### Second Scoreing system design
+In general this design was liked, but as feedback clarified i will take some time to catch up in later rounds
+
+# Second Scoreing system design
 
 My second idea for a scoring system is having a system similar to the first meaning after each game everyone will get a placement 1st, 2nd and 3rd etc, and that will dictate the number of points they get but the gap between each of the placements points they get is calculated with an exponential equation like
 I = placement number
 (I / 3) * 2 = Points
 I would believe this is a great method pf scoring  because then it makes it a lot easier for people to gain the lead again after losing it as the boundaries are a lot closer than with the other systems, I have come up with.
 
+## Feedbck
+in general with this system i got possitive feedbackand didnt have many issues raised with it
+
+# GUI Design one
 
 For my initial design for the layout, I have decided to create this
 
@@ -35,9 +44,12 @@ Within this design I have chosen to have multiple areas of the application first
 
 To change/add new team there are confusing menus for the admins to navigate and modify all the game settings, features and competing players I don’t believe the layout of these menus are simple to navigate and change the settings for.
 
+## Feedback
 
+From this design i got feed back from other witch mainly said that i need an established colour palate and theme, so id decided i would make this choice when i had the design created so that i can play with it alot more,
+i also got told that the setting and managment of the tams/events was very vague and needed to be explained before use.
 
-### GUI Design one
+# GUI Design two
 
 This is my main gui  design
 
@@ -45,6 +57,7 @@ This is my main gui  design
 
 With this design I believe I have cleared up a lot of the confusion with the design and general usage of the application, with this design everything is in one window, but there are 2 operating modes of this application, spectator mode and admin mode within spectator mode all the add new/change buttons/input fields are unusable and hidden from the operator but in admin mode all of them fields are usable and visible.
 
+## Feedback
 
 ### Development issues
 
