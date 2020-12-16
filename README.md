@@ -59,6 +59,8 @@ With this design I believe I have cleared up a lot of the confusion with the des
 
 ## Feedback
 
+Ive been told that this design is very clunky and messy but if done correctly it could possibly work.
+
 ### Development issues
 
 While starting the development of this software I had raised a few concerns in regards to saving the data  I first attempted to use a JSON file for managing everything in regards to storing everything and keeping everything persistent, but I found this approach to be very time consuming and inefficient. I instead opted to instead convert the mainStorage var that stores everything into a BYTE array and then write them raw BYTEs to a file, then on load of the application it will load them RAW bytes and convert them into the correct objects. Completing the Save/Load cycle.
