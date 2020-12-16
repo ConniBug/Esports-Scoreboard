@@ -61,9 +61,13 @@ With this design I believe I have cleared up a lot of the confusion with the des
 
 Ive been told that this design is very clunky and messy but if done correctly it could possibly work.
 
-### Development issues
+# Development issues
 
 While starting the development of this software I had raised a few concerns in regards to saving the data  I first attempted to use a JSON file for managing everything in regards to storing everything and keeping everything persistent, but I found this approach to be very time consuming and inefficient. I instead opted to instead convert the mainStorage var that stores everything into a BYTE array and then write them raw BYTEs to a file, then on load of the application it will load them RAW bytes and convert them into the correct objects. Completing the Save/Load cycle.
 
 During development ive decided that I will have to add in the saving/sterilisation later on in the project so Ive pushed that further down the backlog as currently it will require a lot of work to create a fast and efficient custom implementation.
-While creating the final design and production of the scoreboard I decided functionality was less important than the GUI as I can rework the GUI in a later releace 
+While creating the final design and production of the scoreboard I decided functionality was less important than the GUI as I can rework the GUI in a later releace.
+
+# Currently known bugs
+
+For the score changing features you have to select the game at least once first for anything to display.
